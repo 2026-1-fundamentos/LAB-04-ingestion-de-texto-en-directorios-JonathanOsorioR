@@ -86,12 +86,12 @@ def pregunta_01():
         archivos = glob.glob(f"files/input_extraido/input/{carpeta}/**/*.txt")
         dic = {"phrase":[],"target":[]}
         for archivo in archivos:
-            
+            carpeta_contenedora = os.path.basename(os.path.dirname(archivo))
             with open(archivo,"r") as archivo:
                 contenido = archivo.read()
                 target = archivo.name.split("\\")[1]
                 dic["phrase"].append(contenido)
-                dic["target"].append(target)
+                dic["target"].append(carpeta_contenedora)
         df = pd.DataFrame(dic)
         df.to_csv(f"files/output/{carpeta}_dataset.csv",index = False)
 
