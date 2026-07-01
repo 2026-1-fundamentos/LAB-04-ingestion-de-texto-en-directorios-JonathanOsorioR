@@ -81,17 +81,22 @@ def pregunta_01():
     # Extraemos todo el contenido en una carpeta llamada 'input_extraido' 
     # o puedes usar '.' para extraerlo en la raíz
         zip_ref.extractall('files/input_extraido')
-    archivos = glob.glob('files/input_extraido/input/test/**/*.txt')
-    dic = {"phrase":[],"target":[]}
-    for archivo in archivos:
-        
-        with open(archivo,"r") as archivo:
-            contenido = archivo.read()
-            target = archivo.name.split("\\")[1]
-            dic["phrase"].append(contenido)
-            dic["target"].append(target)
-    df = pd.DataFrame(dic)
-    df.to_csv("files/output/test_dataset.csv",index = False)
-    return df
 
-print(pregunta_01())
+    def crear_csv(carpeta):
+        archivos = glob.glob(f"files/input_extraido/input/{carpeta}/**/*.txt")
+        dic = {"phrase":[],"target":[]}
+        for archivo in archivos:
+            
+            with open(archivo,"r") as archivo:
+                contenido = archivo.read()
+                target = archivo.name.split("\\")[1]
+                dic["phrase"].append(contenido)
+                dic["target"].append(target)
+        df = pd.DataFrame(dic)
+        df.to_csv(f"files/output/{carpeta}_dataset.csv",index = False)
+
+    carpetas = glob.glob('files/input_extraido/input/*')
+    for carpeta in carpetas:
+        crear_csv(carpeta.split("\\")[1])
+    
+pregunta_01()
