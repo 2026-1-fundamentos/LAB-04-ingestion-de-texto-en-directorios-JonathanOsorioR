@@ -78,8 +78,7 @@ def pregunta_01():
     archivo_zip = 'files/input.zip'
 
     with zipfile.ZipFile(archivo_zip, 'r') as zip_ref:
-    # Extraemos todo el contenido en una carpeta llamada 'input_extraido' 
-    # o puedes usar '.' para extraerlo en la raíz
+
         zip_ref.extractall('files/input_extraido')
 
     def crear_csv(carpeta):
