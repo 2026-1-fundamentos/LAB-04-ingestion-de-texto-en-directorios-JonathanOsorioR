@@ -96,6 +96,7 @@ def pregunta_01():
 
     carpetas = glob.glob('files/input_extraido/input/*')
     for carpeta in carpetas:
-        crear_csv(carpeta.split("\\")[1])
+        nombre_carpeta = os.path.basename(carpeta)
+        crear_csv(nombre_carpeta)
     
 pregunta_01()
