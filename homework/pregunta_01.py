@@ -4,7 +4,10 @@
 """
 Escriba el codigo que ejecute la accion solicitada en cada pregunta.
 """
-
+import zipfile
+import os
+import glob
+import pandas as pd
 
 def pregunta_01():
     """
@@ -71,3 +74,24 @@ def pregunta_01():
 
 
     """
+    #Descomprimir
+    archivo_zip = 'files/input.zip'
+
+    with zipfile.ZipFile(archivo_zip, 'r') as zip_ref:
+    # Extraemos todo el contenido en una carpeta llamada 'input_extraido' 
+    # o puedes usar '.' para extraerlo en la raíz
+        zip_ref.extractall('files/input_extraido')
+    archivos = glob.glob('files/input_extraido/input/test/**/*.txt')
+    dic = {"phrase":[],"target":[]}
+    for archivo in archivos:
+        
+        with open(archivo,"r") as archivo:
+            contenido = archivo.read()
+            target = archivo.name.split("\\")[1]
+            dic["phrase"].append(contenido)
+            dic["target"].append(target)
+    df = pd.DataFrame(dic)
+    df.to_csv("files/output/test_dataset.csv",index = False)
+    return df
+
+print(pregunta_01())
